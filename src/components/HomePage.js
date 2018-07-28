@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import {View, StyleSheet} from 'react-native'
-import ListTodo from "./ListTodo"
+import ListTasks from "./ListTasks"
 import FormCreate from "./FormCreate"
-import {getListTasks, addTask} from '../services/StorageServices'
+import {getListTasks, addTask, removeTaks} from '../services/StorageServices'
 
 class HomePage extends Component {
     state = {
@@ -38,13 +38,22 @@ class HomePage extends Component {
             })
     }
 
+    _handleOnRemove = index => {
+        removeTaks(index)
+            .then(() => {
+                this.setState(({tasks}) => ({
+                    tasks: tasks.filter((_, _index) => _index !== index)
+                }))
+            })
+    }
+
     render() {
         const {tasks} = this.state
 
         return (
             <View style={styles.container}>
                 <FormCreate onCreate={this._handleOnCreate}/>
-                <ListTodo tasks={tasks}/>
+                <ListTasks onRemove={this._handleOnRemove} tasks={tasks}/>
             </View>
         )
     }

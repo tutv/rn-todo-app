@@ -5,7 +5,7 @@ class Header extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>ToDo App</Text>
+                <Text style={styles.text}>ToDo App</Text>
             </View>
         )
     }
@@ -13,7 +13,16 @@ class Header extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        width: '100%'
+        width: '100%',
+        backgroundColor: 'red',
+        justifyContent: 'center'
+    },
+
+    text: {
+        padding: 10,
+        color: '#fff',
+        textAlign: 'center',
+        fontSize:16,
     }
 })
 

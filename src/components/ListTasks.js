@@ -1,8 +1,13 @@
 import React, {Component} from 'react'
-import {View, Text, ScrollView, StyleSheet} from 'react-native'
+import {View, ScrollView, StyleSheet} from 'react-native'
 import PropTypes from 'prop-types'
+import TaskItem from "./TaskItem"
 
-class ListTodo extends Component {
+class ListTasks extends Component {
+    _handleRemoveTask = index => {
+        this.props.onRemove(index)
+    }
+
     render() {
         const {tasks} = this.props
 
@@ -11,10 +16,8 @@ class ListTodo extends Component {
                 <ScrollView>
                     {
                         tasks.map((task, index) => {
-                            console.log(task)
-
                             return (
-                                <Text key={index}>{task}</Text>
+                                <TaskItem onRemove={this._handleRemoveTask} key={index} index={index} task={task}/>
                             )
                         })
                     }
@@ -30,8 +33,9 @@ const styles = StyleSheet.create({
     }
 })
 
-ListTodo.propTypes = {
+ListTasks.propTypes = {
     tasks: PropTypes.array.isRequired,
+    onRemove: PropTypes.func.isRequired,
 }
 
-export default ListTodo
+export default ListTasks
