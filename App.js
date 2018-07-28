@@ -1,5 +1,5 @@
 import React from 'react'
-import {StyleSheet, View} from 'react-native'
+import {StyleSheet, View, Platform} from 'react-native'
 import HomePage from './src/components/HomePage'
 import Header from "./src/components/Header"
 
@@ -20,6 +20,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 18,
+        marginTop: Platform.OS === 'ios' ?  18 : 0,
     },
 })

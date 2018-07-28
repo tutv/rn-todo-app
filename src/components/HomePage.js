@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {View, StyleSheet} from 'react-native'
 import ListTasks from "./ListTasks"
 import FormCreate from "./FormCreate"
-import {getListTasks, addTask, removeTaks} from '../services/StorageServices'
+import {getListTasks, addTask, removeTask, toggleTask} from '../services/StorageServices'
 
 class HomePage extends Component {
     state = {
@@ -38,12 +38,21 @@ class HomePage extends Component {
             })
     }
 
-    _handleOnRemove = index => {
-        removeTaks(index)
-            .then(() => {
-                this.setState(({tasks}) => ({
-                    tasks: tasks.filter((_, _index) => _index !== index)
-                }))
+    _handleOnRemove = id => {
+        removeTask(id)
+            .then((currentTasks) => {
+                this.setState({
+                    tasks: currentTasks
+                })
+            })
+    }
+
+    _handleToggleTask = (id) => {
+        toggleTask(id)
+            .then((tasks) => {
+                this.setState({
+                    tasks,
+                })
             })
     }
 
@@ -53,7 +62,7 @@ class HomePage extends Component {
         return (
             <View style={styles.container}>
                 <FormCreate onCreate={this._handleOnCreate}/>
-                <ListTasks onRemove={this._handleOnRemove} tasks={tasks}/>
+                <ListTasks onToggle={this._handleToggleTask} onRemove={this._handleOnRemove} tasks={tasks}/>
             </View>
         )
     }
@@ -64,7 +73,8 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-start',
         flexDirection: 'column',
-        width: '100%'
+        width: '100%',
+        backgroundColor: '#eee'
     }
 })
 

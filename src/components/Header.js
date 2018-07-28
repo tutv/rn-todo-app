@@ -14,7 +14,7 @@ class Header extends Component {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        backgroundColor: 'red',
+        backgroundColor: 'green',
         justifyContent: 'center'
     },
 
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         padding: 10,
         color: '#fff',
         textAlign: 'center',
-        fontSize:16,
+        fontSize: 16,
     }
 })
 

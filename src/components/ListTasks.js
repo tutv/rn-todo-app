@@ -4,12 +4,9 @@ import PropTypes from 'prop-types'
 import TaskItem from "./TaskItem"
 
 class ListTasks extends Component {
-    _handleRemoveTask = index => {
-        this.props.onRemove(index)
-    }
 
     render() {
-        const {tasks} = this.props
+        const {tasks, onRemove, onToggle} = this.props
 
         return (
             <View style={styles.container}>
@@ -17,7 +14,10 @@ class ListTasks extends Component {
                     {
                         tasks.map((task, index) => {
                             return (
-                                <TaskItem onRemove={this._handleRemoveTask} key={index} index={index} task={task}/>
+                                <TaskItem
+                                    key={index} index={index}
+                                    onToggle={onToggle} onRemove={onRemove}
+                                    task={task}/>
                             )
                         })
                     }
@@ -29,13 +29,16 @@ class ListTasks extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        width: '100%'
+        width: '100%',
+        paddingLeft: 10,
+        paddingRight: 10,
     }
 })
 
 ListTasks.propTypes = {
     tasks: PropTypes.array.isRequired,
     onRemove: PropTypes.func.isRequired,
+    onToggle: PropTypes.func.isRequired,
 }
 
 export default ListTasks

@@ -1,4 +1,5 @@
 import {AsyncStorage} from 'react-native'
+import uuid from 'uuid/v4'
 
 const _getKey = () => {
     return '@cg:tasks'
@@ -27,21 +28,52 @@ export const getListTasks = () => {
 }
 
 export const addTask = (name) => {
+    if (!name) {
+        return Promise.reject('Task name is empty')
+    }
+
+    const task = {
+        id: uuid(),
+        created: Date.now(),
+        name,
+        completed: false
+    }
+
     return getListTasks()
         .then(currentTasks => {
-            const tasks = [].concat([name], currentTasks)
+            const tasks = [].concat([task], currentTasks)
 
             return _storeListTasks(tasks)
-                .then(() => name)
+                .then(() => task)
         })
 }
 
-export const removeTaks = (index) => {
+export const removeTask = (id) => {
     return getListTasks()
         .then(currentTasks => {
-            const tasks = currentTasks.filter((_, _index) => _index !== index)
+            const tasks = currentTasks.filter((task) => task.id !== id)
 
             return _storeListTasks(tasks)
-                .then(() => true)
+                .then(() => tasks)
         })
+}
+
+export const toggleTask = (id) => {
+    return getListTasks()
+        .then(currentTasks => {
+            const tasks = currentTasks.map(task => {
+                if (task.id === id) {
+                    return {
+                        ...task,
+                        completed: !task.completed
+                    }
+                }
+
+                return task
+            })
+
+            return _storeListTasks(tasks)
+                .then(() => tasks)
+        })
+
 }
