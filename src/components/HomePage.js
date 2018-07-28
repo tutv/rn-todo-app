@@ -1,11 +1,50 @@
 import React, {Component} from 'react'
-import {View, Text, StyleSheet} from 'react-native'
+import {View, StyleSheet} from 'react-native'
+import ListTodo from "./ListTodo"
+import FormCreate from "./FormCreate"
+import {getListTasks, addTask} from '../services/StorageServices'
 
 class HomePage extends Component {
+    state = {
+        tasks: [],
+        loading: false
+    }
+
+    componentDidMount() {
+        this._fetchListTasks()
+    }
+
+    _fetchListTasks = () => {
+        this.setState({loading: true})
+
+        getListTasks().then(tasks => {
+            this.setState({
+                loading: false,
+                tasks: Array.isArray(tasks) ? tasks : [],
+            })
+        }).catch(error => {
+            console.error(error)
+
+            this.setState({loading: false})
+        })
+    }
+
+    _handleOnCreate = name => {
+        addTask(name)
+            .then(task => {
+                this.setState(({tasks}) => ({
+                    tasks: [].concat([task], tasks)
+                }))
+            })
+    }
+
     render() {
+        const {tasks} = this.state
+
         return (
             <View style={styles.container}>
-                <Text>ToDo App</Text>
+                <FormCreate onCreate={this._handleOnCreate}/>
+                <ListTodo tasks={tasks}/>
             </View>
         )
     }
@@ -14,6 +53,8 @@ class HomePage extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        justifyContent: 'flex-start',
+        flexDirection: 'column',
         width: '100%'
     }
 })
