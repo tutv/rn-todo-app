@@ -2,4 +2,4 @@
 
 ## Ảnh demo
 
-![Home](/demo/home.jpeg)
+![Home](/demo/home-1.jpeg)
