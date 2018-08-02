@@ -8,8 +8,9 @@ Thực hành kiến thức về AysncStorage trong React Native.
 
 - Tạo 1 project với `creact-react-native-app`.
 - Tạo màn hình hiển thị danh sách các công việc cần làm hàng ngày (tasks).
-- Các task cho phép xóa hoặc complete/uncomplete.
+- Các task cho phép `xóa` hoặc `complete/uncomplete`.
 - Tạo 1 form để tạo task mới.
+- Ứng dụng cho phép lưu lại danh sách các tasks khi đã tắt ứng dụng và mở lại ứng dụng lần sau.
 
 ## Hướng dẫn
 
